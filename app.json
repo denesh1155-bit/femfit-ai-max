@@ -1,0 +1,27 @@
+{
+    "expo": {
+          "name": "FemFit AI Max",
+          "slug": "femfit-ai-max",
+          "version": "1.0.0",
+          "orientation": "portrait",
+          "icon": "./src/assets/icon.png",
+          "userInterfaceStyle": "dark",
+          "splash": {
+                  "image": "./src/assets/splash.png",
+                  "resizeMode": "contain",
+                  "backgroundColor": "#1A1025"
+          },
+          "assetBundlePatterns": [
+                  "**/*"
+          ],
+          "ios": {
+                  "bundleIdentifier": "com.femfit.ai.max"
+          },
+          "android": {
+                  "package": "com.femfit.ai.max"
+          },
+          "plugins": [
+                   "expo-localization", "expo-local-authentication", "expo-av", "expo-camera", "expo-file-system", "expo-haptics"
+          ]
+    }
+}
