@@ -1,37 +1,21 @@
 name: Build Android APK
 on:
   push:
-      branches: [ main, master ]
-      jobs:
-        build:
-            runs-on: ubuntu-latest
-                steps:
-                      - name: Checkout repository
-                              uses: actions/checkout@v3
-                                    - name: Setup Node.js
-                                            uses: actions/setup-node@v3
-                                                    with:
-                                                              node-version: 18
-                                                                        cache: 'npm'
-                                                                              - name: Install dependencies
-                                                                                      run: npm install
-                                                                                            - name: Install Expo CLI
-                                                                                                    run: npm install --global expo-cli
-                                                                                                          - name: Build APK (Local-first logic)
-                                                                                                                  run: |
-                                                                                                                            npx expo prebuild
-                                                                                                                                      cd android && ./gradlew assembleRelease
-                                                                                                                                              env:
-                                                                                                                                                        EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-                                                                                                                                                              - name: Create Release
-                                                                                                                                                                      uses: softprops/action-gh-release@v1
-                                                                                                                                                                              with:
-                                                                                                                                                                                        tag_name: build-${{ github.run_number }}
-                                                                                                                                                                                                  name: Release Build ${{ github.run_number }} (Goddess Edition)
-                                                                                                                                                                                                            files: android/app/build/outputs/apk/release/app-release.apk
-                                                                                                                                                                                                                      draft: false
-                                                                                                                                                                                                                                prerelease: false
-                                                                                                                                                                                                                                        env:
-                                                                                                                                                                                                                                                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                                                                                                                                                                                                                                                  permissions:
-                                                                                                                                                                                                                                                    contents: write
+    branches: [ main, master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Install Expo CLI
+        run: npm install --global expo-cli
+      - name: Build APK (Local-first logic)
+        run: npx expo build:android --type apk
